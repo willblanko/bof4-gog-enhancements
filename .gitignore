@@ -26,3 +26,6 @@ ddraw_proxy.log
 *.png
 *.bmp
 *.gif
+
+# Documentation images (the portrait gallery)
+!docs/images/**/*.png
