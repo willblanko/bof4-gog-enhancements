@@ -122,9 +122,9 @@ enum { C_COMBO_HITS, C_HOURS, C_ENCOUNTERS, C_SPECIES, C_FAERIES, C_FISH,
        C_INVENTORY, C_COMBO_DMG, C_RYU, C_BALL, C_HIT_DMG };
 
 static const char *COUNTER_NAME[] = {
-    "acertos no combo", "horas jogadas", "batalhas", "especies", "fadas",
-    "pontos de pesca", "tipos de item", "dano no combo", "nivel do Ryu",
-    "rank da bola", "dano do golpe"
+    "combo hits", "play time", "battles", "species", "fairies",
+    "fishing points", "item types", "combo damage", "Ryu level",
+    "ball rank", "move damage"
 };
 
 typedef struct {
@@ -535,7 +535,7 @@ static void paint_panel(void)
     SetBkMode(g_mdc, TRANSPARENT);
     SelectObject(g_mdc, g_font);
 
-    wsprintfA(buf, "Mestres  pag %u/2", (unsigned int)(g_page + 1));
+    wsprintfA(buf, "Masters  page %u/2", (unsigned int)(g_page + 1));
     txt(8, 8, buf, RGB(255, 255, 0));
     for (k = 0; k < PAGE_ROWS; k++) {
         idx = g_page * PAGE_ROWS + k;
@@ -551,35 +551,35 @@ static void paint_panel(void)
     }
 
     if (!g_have_save) {
-        txt(160, 8, "Sem save carregado", RGB(140, 140, 140));
+        txt(160, 8, "No save loaded", RGB(140, 140, 140));
     } else if (!g_met[g_sel]) {
         txt(160, 8, "???", RGB(255, 255, 0));
-        txt(160, 30, "Ainda nao conhecido.", RGB(140, 140, 140));
+        txt(160, 30, "Not known yet.", RGB(140, 140, 140));
     } else {
         m = &MASTER_TAB[g_sel];
         txt(160, 8, m->name, RGB(255, 255, 0));
-        txt(160, 30, "Aprendiz", RGB(255, 255, 255));
-        txt(264, 30, g_pupil[g_sel][0] ? g_pupil[g_sel] : "nenhum",
+        txt(160, 30, "Apprentice", RGB(255, 255, 255));
+        txt(264, 30, g_pupil[g_sel][0] ? g_pupil[g_sel] : "none",
             g_pupil[g_sel][0] ? RGB(255, 255, 255) : RGB(140, 140, 140));
-        txt(160, 52, "Conta", RGB(255, 255, 255));
+        txt(160, 52, "Count", RGB(255, 255, 255));
         txt(264, 52, COUNTER_NAME[m->counter], RGB(255, 255, 255));
-        txt(160, 74, "Tem", RGB(255, 255, 255));
+        txt(160, 74, "Has", RGB(255, 255, 255));
         wsprintfA(buf, "%u", g_val[g_sel]);
         txt(264, 74, buf, RGB(255, 255, 255));
 
-        txt(160, 100, "Precisa", RGB(140, 140, 140));
-        txt(240, 100, "Recompensa", RGB(140, 140, 140));
-        txt(400, 100, "Estado", RGB(140, 140, 140));
+        txt(160, 100, "Needs", RGB(140, 140, 140));
+        txt(240, 100, "Reward", RGB(140, 140, 140));
+        txt(400, 100, "Status", RGB(140, 140, 140));
         for (t = 0; t < m->tiers; t++) {
             COLORREF col = RGB(255, 255, 255);
             const char *status = "";
             y = 122 + t * 22;
             if (t < g_next[g_sel]) {
                 col = RGB(140, 140, 140);
-                status = "Obtida";
+                status = "Earned";
             } else if (g_val[g_sel] >= m->need[t]) {
                 col = RGB(120, 230, 120);
-                status = t == g_next[g_sel] ? "pronta" : "cumprida";
+                status = t == g_next[g_sel] ? "ready" : "done";
             }
             wsprintfA(buf, "%u", m->need[t]);
             txt(160, y, buf, col);
@@ -587,7 +587,7 @@ static void paint_panel(void)
             txt(400, y, status, col);
         }
 
-        txt(160, 226, "Bonus por nivel", RGB(255, 255, 0));
+        txt(160, 226, "Level-up bonus", RGB(255, 255, 0));
         for (k = 0; k < 6; k++) {
             int b = BONUS_TAB[g_sel][k];
             txt(232 + k * 46, 248, STAT_NAME[k], RGB(140, 140, 140));
@@ -604,9 +604,9 @@ static void paint_panel(void)
     }
     if (g_have_save && g_met[g_sel]) draw_face(g_sel);
     if (g_cur >= 0) wsprintfA(buf, "RAM %08X", (unsigned int)(UINT_PTR)g_cand_addr[g_cur]);
-    else wsprintfA(buf, "RAM nao detectada");
+    else wsprintfA(buf, "RAM not detected");
     txt(8, 280, buf, RGB(140, 140, 140));
-    txt(8, 296, "F12 fecha  F10 pagina  1-6", RGB(140, 140, 140));
+    txt(8, 296, "F12 close  F10 page  1-6", RGB(140, 140, 140));
 }
 
 /* ---- Diario: the port's objective journal (qol/tracker.odin) ----
@@ -620,17 +620,17 @@ static void paint_panel(void)
 
 typedef struct { unsigned int area, bit; const char *text; } OBJECTIVE;
 static const OBJECTIVE OBJECTIVES[OBJ_N] = {
-    {2, 1, "Siga pelos penhascos a caminho de Sarai."},
-    {2, 3, "Pule as falhas da estrada dos penhascos."},
-    {2, 4, "Continue subindo enquanto houver luz."},
-    {2, 5, "Ache um lugar para acampar a noite."},
-    {2, 6, "Fou-Lu: Saia da tumba."},
-    {2, 10, "Fou-Lu: Va para a capital."},
-    {2, 11, "Fou-Lu: Fuja da floresta em chamas."},
-    {4, 0, "Suba os penhascos ate a cidade de Sarai."},
-    {4, 12, "Pergunte em Sarai por pecas do sandflier. Tente a taverna."},
-    {4, 18, "Pegue uma pa e o cao no Vale do Sandflier, ao sul da cidade."},
-    {4, 19, "Cave atras da peca no Vale do Sandflier."},
+    {2, 1, "Follow the cliffs on the way to Sarai."},
+    {2, 3, "Jump over the gaps on the cliff road."},
+    {2, 4, "Keep climbing while there is light."},
+    {2, 5, "Find a place to camp for the night."},
+    {2, 6, "Fou-Lu: Leave the tomb."},
+    {2, 10, "Fou-Lu: Go to the capital."},
+    {2, 11, "Fou-Lu: Escape the burning forest."},
+    {4, 0, "Climb the cliffs to the city of Sarai."},
+    {4, 12, "Ask in Sarai about sandflier parts. Try the tavern."},
+    {4, 18, "Get a shovel and the dog in the Sandflier Valley, south of the city."},
+    {4, 19, "Dig behind the part in the Sandflier Valley."},
 };
 
 /* One general line per story area (chapter), for the parts of the game the beats above
@@ -640,28 +640,28 @@ static const OBJECTIVE OBJECTIVES[OBJ_N] = {
 #define AREA_N 24
 static const char *const AREA_TEXT[AREA_N] = {
     NULL,
-    "Kyria e a represa: atravesse a vila das armadilhas e resolva o problema da represa.",
-    "Penhascos a caminho de Sarai (e o despertar de Fou-Lu).",
-    "Chamba: atravesse a cidade amaldicoada e siga viagem com o sandflier.",
-    "Sarai e o Vale do Sandflier: consiga a peca do sandflier.",
-    "Synesta: procure Marlok e resolva o que ele pedir na cidade.",
-    "Worent e a planicie da nevoa: siga para o Castelo de Wyndia.",
-    "Base do Imperio e o portal: passe pelo porto de carga e pelo Gateway.",
-    "Castelo de Ludia e o mundo das fadas: cuide dos prisioneiros e da tregua.",
-    "Sob o Castelo de Wyndia: desca ate o altar.",
-    "Montanhas do vento: suba de gondola e fale com a Oraculo do Vento.",
-    "Vila isolada e os sonhos: siga as pistas do proximo dragao.",
-    "A montanha que despertou: suba ate o lugar de aura poderosa.",
-    "Vila abandonada: encontre o dragao e desca a montanha.",
-    "Shikk e o mar: consiga um navio e va ao santuario do Deus do Mar.",
-    "Travessia para o Imperio: reabasteca no porto e siga ate Chedo, a capital.",
-    "Castelo Imperial: entre no castelo.",
-    "Vila Chiqua e Koshka: explore as terras alcancadas por mar.",
-    "Rumo a capital: liberte quem esta preso e passe pelo tumulo sagrado.",
-    "Chedo, a capital, depois do desastre: avance ate o castelo.",
+    "Kyria and the dam: cross the trap village and solve the dam problem.",
+    "Cliffs on the way to Sarai (and Fou-Lu's awakening).",
+    "Chamba: cross the cursed city and continue the trip with the sandflier.",
+    "Sarai and the Sandflier Valley: get the sandflier part.",
+    "Synesta: look for Marlok and do what he asks in the city.",
+    "Worent and the mist plain: head to Wyndia Castle.",
+    "Imperial base and the portal: go through the cargo port and the Gateway.",
+    "Ludia Castle and the fairy world: take care of the prisoners and the truce.",
+    "Under Wyndia Castle: go down to the altar.",
+    "Wind mountains: ride the gondola and talk to the Wind Oracle.",
+    "Isolated village and dreams: follow the clues to the next dragon.",
+    "The mountain that woke up: climb to the place of powerful aura.",
+    "Abandoned village: find the dragon and go down the mountain.",
+    "Shikk and the sea: get a ship and go to the Sea God's sanctuary.",
+    "Crossing to the Empire: resupply at the port and continue to Chedo, the capital.",
+    "Imperial Castle: enter the castle.",
+    "Chiqua and Koshka villages: explore the lands reached by sea.",
+    "Toward the capital: free the prisoners and pass through the sacred tomb.",
+    "Chedo, the capital, after the disaster: advance to the castle.",
     NULL,
     NULL,
-    "Castelo Imperial, reta final: suba os andares ate o fim.",
+    "Imperial Castle, final stretch: climb the floors to the end.",
     NULL,
 };
 
@@ -720,9 +720,9 @@ static void paint_journal(void)
     fill_all(RGB(12, 12, 36));
     SetBkMode(g_mdc, TRANSPARENT);
     SelectObject(g_mdc, g_font);
-    txt(8, 8, "Diario", RGB(255, 255, 0));
+    txt(8, 8, "Journal", RGB(255, 255, 0));
     if (!g_have_save) {
-        txt(8, 34, "Sem save carregado", RGB(140, 140, 140));
+        txt(8, 34, "No save loaded", RGB(140, 140, 140));
     } else {
         /* The step-by-step beats cover areas 2 and 4 only. Anywhere else (or past their
          * end) the chapter's general line shows, picked by the save's current area. */
@@ -730,13 +730,13 @@ static void paint_journal(void)
         const char *chapter = area < AREA_N ? AREA_TEXT[area] : NULL;
         g_jn = 0;
         next = objective_next();
-        jl_add("Agora", RGB(255, 255, 0), 0);
+        jl_add("Now", RGB(255, 255, 0), 0);
         if ((area == 2 || area == 4) && next < OBJ_N) jl_add(OBJECTIVES[next].text, RGB(255, 255, 255), 8);
         else if (chapter) jl_add(chapter, RGB(255, 255, 255), 8);
-        else jl_add("Nenhum objetivo anotado ainda.", RGB(140, 140, 140), 8);
+        else jl_add("No objective noted yet.", RGB(140, 140, 140), 8);
         if (next > 0) {
             jl_add("", RGB(255, 255, 255), 0);
-            jl_add("Feito", RGB(255, 255, 0), 0);
+            jl_add("Done", RGB(255, 255, 0), 0);
             for (i = next; i > 0; i--) jl_add(OBJECTIVES[i - 1].text, RGB(255, 255, 255), 8);
         }
         {
@@ -748,7 +748,7 @@ static void paint_journal(void)
                 if (!rd32(SG(AREA_WORDS + i * 4))) continue;
                 if (!head) {
                     jl_add("", RGB(255, 255, 255), 0);
-                    jl_add("Regioes ja visitadas", RGB(255, 255, 0), 0);
+                    jl_add("Areas visited", RGB(255, 255, 0), 0);
                     head = 1;
                 }
                 jl_add(AREA_TEXT[i], RGB(200, 200, 200), 8);
@@ -764,7 +764,7 @@ static void paint_journal(void)
             if (l->text[0]) txt(8 + l->indent, 34 + row * 16, l->text, l->colour);
         }
     }
-    txt(8, 296, "Q/E rola  J fecha", RGB(140, 140, 140));
+    txt(8, 296, "Q/E scroll  J close", RGB(140, 140, 140));
 }
 
 /* Copies the GDI surface into the texture. Black becomes alpha 0. */
@@ -1063,22 +1063,22 @@ static void build_overlay_tex(void)
     repaint();
 }
 
-/* ---- Intro subtitles (Portuguese). Same timings as the German patch's MOV\ZBOF4.srt.
- * The clock starts when the game starts the movie; L toggles. Times in ms. Text without accents, as the rest of the port. ---- */
+/* ---- Intro subtitles (English). Same timings as the German patch's MOV\ZBOF4.srt.
+ * The clock starts when the game starts the movie; L toggles. Times in ms. Text in plain ASCII. ---- */
 typedef struct { DWORD start, end; const char *text; } SUB_CUE;
 static const SUB_CUE SUBS[] = {
-    {35501, 36737, "Nina: Eu acreditei em voc\352..."},
-    {37286, 38886, "Nina: Desde o come\347o."},
-    {43320, 44786, "Ryu: O que..."},
-    {44810, 47486, "Ryu: O que... voc\352 vai fazer agora?"},
-    {47900, 50299, "Ryu: Para onde o seu caminho vai te levar?"},
-    {64786, 68461, "Ryu: Quer dizer que as pessoas s\343o t\343o corrompidas que nunca podem mudar?"},
-    {68462, 70420, "Ryu: \311 isso que voc\352 acha?!"},
-    {71314, 72620, "Ryu: Voc\352 est\341 errado!"},
-    {73053, 73853, "Ryu: Pessoas..."},
-    {74420, 76020, "Ryu: As pessoas n\343o s\343o t\343o corrompidas..."},
-    {82268, 84353, "Nina: Quem..."},
-    {84377, 86653, "Nina: Quem... \351 voc\352?"},
+    {35501, 36737, "Nina: I believed in you..."},
+    {37286, 38886, "Nina: Right from the start."},
+    {43320, 44786, "Ryu: What..."},
+    {44810, 47486, "Ryu: What are you trying to do?"},
+    {47900, 50299, "Ryu: Where do you think you're going?"},
+    {64786, 68461, "Ryu: So you're saying people are so corrupt they can never change?"},
+    {68462, 70420, "Ryu: So that's what you believe?!"},
+    {71314, 72620, "Ryu: You're wrong!"},
+    {73053, 73853, "Ryu: People..."},
+    {74420, 76020, "Ryu: People are not so corrupt..."},
+    {82268, 84353, "Nina: Who..."},
+    {84377, 86653, "Nina: Who... are you?"},
 };
 #define SUB_COUNT ((int)(sizeof(SUBS) / sizeof(SUBS[0])))
 #define SUB_W 1280
@@ -1878,12 +1878,12 @@ static long __stdcall my_sc_present(void *sc, const void *a, const void *b, HWND
                 if (GetAsyncKeyState(VK_F6) & 1) {
                     g_wk_on = !g_wk_on;
                     logln(g_wk_on ? "walk stick ON" : "walk stick OFF");
-                    status_show(g_wk_on ? "Caminhada pelo analogico: LIGADA" : "Caminhada pelo analogico: DESLIGADA");
+                    status_show(g_wk_on ? "Analog stick walking: ON" : "Analog stick walking: OFF");
                 }
                 if (GetAsyncKeyState(VK_F8) & 1) {
                     g_enc_off = !g_enc_off;
                     logln(g_enc_off ? "random encounters OFF" : "random encounters ON");
-                    status_show(g_enc_off ? "Batalhas aleatorias: DESLIGADAS" : "Batalhas aleatorias: LIGADAS");
+                    status_show(g_enc_off ? "Random battles: OFF" : "Random battles: ON");
                 }
                 {
                     unsigned short gm = *(const unsigned short *)MM_GAME_MODE;

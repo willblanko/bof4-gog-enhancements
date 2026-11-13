@@ -9,7 +9,7 @@ Story battles, scripted battles and boss fights are not random encounters and
 are not affected by this switch. Testing them with the switch off is still open.
 
 - F8: turns random battles on or off. Default: on (the game's normal behaviour).
-- A status line shows `Batalhas aleatorias: LIGADAS` or `DESLIGADAS` for 1.5 s.
+- A status line shows `Random battles: ON` or `Random battles: OFF` for 1.5 s.
 
 ## How it works
 
