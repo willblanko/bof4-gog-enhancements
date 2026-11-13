@@ -65,10 +65,28 @@ Full table: [roadmap](docs/roadmap.md).
 
 ## Credits
 
-Breath of Fire IV is by Capcom. The recomp port is by its own authors. This
-project is an unofficial community effort and is not affiliated with Capcom
-or the recomp project.
+- **Recomp:** this project exists because of the native BOF4 recomp by
+  [plaught-armor](https://github.com/plaught-armor/bof4-recomp). Its feature list
+  (`docs/port-changes.md`) is the reference for every feature here, and its
+  source and documentation were used to understand the game's behaviour. Thank
+  you to its authors.
+- **Breath of Fire IV** is by Capcom. This project is an unofficial community
+  effort and is not affiliated with Capcom or the recomp project.
 
+### Tools used in the research
+
+- **IDA Pro** (with the IDA MCP plugin): disassembly, decompilation and
+  cross-references of `BOF4.exe` (GOG 1.0). All addresses in the documentation
+  come from IDA analysis.
+- **Microsoft Visual Studio 2022 Build Tools** (`cl` and `link`, x86): builds the
+  proxy DLLs.
+- **Codex** (OpenAI): static investigations and written reports on the field
+  movement, random encounters, wall transparency and quick save.
+- **Claude Code** (Anthropic): code changes, build and test support, and the
+  documentation in this repository.
+- **Git and GitHub CLI (`gh`)**: version control and publishing.
+- **The recomp's source** (Odin, `port/src/qol/`): reference for the walk,
+  camera, save and journal features.
 ## License
 
 This project is released under the [MIT License](LICENSE). It does not include any Capcom or recomp code or game assets.
