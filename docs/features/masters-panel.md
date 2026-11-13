@@ -30,3 +30,32 @@ The panel scans memory only while it is open, because a scan stalls the game.
 
 - The recomp shows the same information with F2 and from the camp menu's
   Masters command. The GOG build has no camp-menu entry yet.
+
+## Portraits
+
+The 12 portraits are in [`docs/images/masters`](../images/masters/). They are
+read from `src/d3d9/master_faces_data.h` (40×48 pixels each, shown here at 4×).
+
+<table>
+<tr>
+<td align="center"><img src="../images/masters/rwolf.png" width="120"><br>Rwolf</td>
+<td align="center"><img src="../images/masters/momo.png" width="120"><br>Momo</td>
+<td align="center"><img src="../images/masters/kryrik.png" width="120"><br>Kryrik</td>
+<td align="center"><img src="../images/masters/abbess.png" width="120"><br>Abbess</td>
+</tr>
+<tr>
+<td align="center"><img src="../images/masters/njomo.png" width="120"><br>Njomo</td>
+<td align="center"><img src="../images/masters/gyosil.png" width="120"><br>Gyosil</td>
+<td align="center"><img src="../images/masters/stoll.png" width="120"><br>Stoll</td>
+<td align="center"><img src="../images/masters/una.png" width="120"><br>Una</td>
+</tr>
+<tr>
+<td align="center"><img src="../images/masters/bunyan.png" width="120"><br>Bunyan</td>
+<td align="center"><img src="../images/masters/lyta.png" width="120"><br>Lyta</td>
+<td align="center"><img src="../images/masters/khan.png" width="120"><br>Khan</td>
+<td align="center"><img src="../images/masters/marlok.png" width="120"><br>Marlok</td>
+</tr>
+</table>
+
+If you add portraits, export them in the same size and name them in lower case,
+so the gallery stays correct.

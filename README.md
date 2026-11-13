@@ -59,6 +59,7 @@ Full table: [roadmap](docs/roadmap.md).
 - [Architecture](docs/architecture.md): proxies, hooks, call-site patching, logs.
 - [Building](docs/building.md): toolchain, build, deploy, test.
 - [Controls](docs/controls.md): every key and button added by this project.
+- [Localization](docs/localization.md): where the text is, how to translate it, and the PT-BR reference.
 - [Roadmap](docs/roadmap.md): recomp parity table and next steps.
 - [Features](docs/features/README.md): one page per feature.
 - [Memory map](docs/reference/memory-map.md): game addresses used by the hooks.
