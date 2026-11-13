@@ -1,0 +1,28 @@
+# Build output
+*.obj
+*.dll
+*.exp
+*.lib
+*.map
+*.pdb
+*.ilk
+
+# Game files, saves and personal config: never commit these
+*.exe
+*.dat
+*.DAT
+*.sav
+*.SAV
+*.iso
+*.bin
+*.cue
+dxcfg.ini
+bof4_*.txt
+d3d9_proxy.log
+ddraw_proxy.log
+*.log
+
+# Screenshots and captures
+*.png
+*.bmp
+*.gif

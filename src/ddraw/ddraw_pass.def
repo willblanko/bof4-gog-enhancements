@@ -1,0 +1,16 @@
+LIBRARY ddraw
+EXPORTS
+    AcquireDDThreadLock = tramp_0
+    CompleteCreateSysmemSurface = tramp_1
+    D3DParseUnknownCommand = tramp_2
+    DDInternalLock = tramp_3
+    DDInternalUnlock = tramp_4
+    DirectDrawCreate = tramp_5
+    DirectDrawCreateClipper = tramp_6
+    DirectDrawCreateEx = tramp_7
+    DirectDrawEnumerateA = tramp_8
+    DirectDrawEnumerateExA = tramp_9
+    DirectDrawEnumerateExW = tramp_10
+    DirectDrawEnumerateW = tramp_11
+    DllGetClassObject = tramp_12
+    ReleaseDDThreadLock = tramp_13
