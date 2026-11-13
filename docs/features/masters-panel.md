@@ -52,7 +52,7 @@ read from `src/d3d9/master_faces_data.h` (40×48 pixels each, shown here at 4×)
 <tr>
 <td align="center"><img src="../images/masters/bunyan.png" width="120"><br>Bunyan</td>
 <td align="center"><img src="../images/masters/lyta.png" width="120"><br>Lyta</td>
-<td align="center"><img src="../images/masters/kahn.png" width="120"><br>Kahn</td>
+<td align="center"><img src="../images/masters/khan.png" width="120"><br>Khan</td>
 <td align="center"><img src="../images/masters/marlok.png" width="120"><br>Marlok</td>
 </tr>
 </table>
@@ -76,6 +76,6 @@ They match the code, with one item to check:
 | Stoll | item types | 80, 120 |
 | Una | combo damage | 1500, 3000, 10000 |
 | Bunyan | move damage | 3000, 5000, 8000, 12000 |
-| Lyta | Ryu's level | 20, 25, 30 (the code also has 35: **to verify**) |
-| Kahn | battles | 300, 400, 500, 600 |
+| Lyta | Ryu level | 20, 25, 30, 35 (the 35 tier is confirmed in game) |
+| Khan | battles | 300, 400, 500, 600 |
 | Marlok | ball rank | 6, 8, 10 |

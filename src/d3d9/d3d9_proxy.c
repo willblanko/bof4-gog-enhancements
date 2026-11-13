@@ -15,6 +15,7 @@
 #include "master_faces_data.h"   /* FACE_PX, FACE_HAS: the 12 master portraits, 40x48 */
 #include "save_anywhere.h"       /* camp menu Save enabled everywhere (two call sites) */
 #include "enc_off.h"             /* no random encounters on the field (F8 toggles) */
+#include "bonus_icons_data.h"   /* level-up bonus icons: HP, AP, Pwr, Def, Agl, Wis */
 
 typedef void *(WINAPI *PFN_Create9)(UINT);
 typedef long (__stdcall *PFN_CreateDevice)(void *, UINT, int, HWND, DWORD, void *, void **);
@@ -148,7 +149,7 @@ static const MASTER_DEF MASTER_TAB[MASTER_N] = {
     {"Una", C_COMBO_DMG, 3, {1500, 3000, 10000, 0}, {"Pilfer", "Super Combo", "Blitz", ""}, {121, 88, 90, 0}},
     {"Bunyan", C_HIT_DMG, 4, {3000, 5000, 8000, 12000}, {"Backhand", "Counter", "Shadowwalk", "Final Hope"}, {137, 107, 86, 111}},
     {"Lyta", C_RYU, 4, {20, 25, 30, 35}, {"Supplication", "Holy Strike", "Resist", "Benediction"}, {108, 136, 106, 119}},
-    {"Kahn", C_ENCOUNTERS, 4, {300, 400, 500, 600}, {"Focus", "Shout", "Tiger Fist", "Flex"}, {104, 112, 157, 158}},
+    {"Khan", C_ENCOUNTERS, 4, {300, 400, 500, 600}, {"Focus", "Shout", "Tiger Fist", "Flex"}, {104, 112, 157, 158}},
     {"Marlok", C_BALL, 3, {6, 8, 10, 0}, {"Charm", "Monopolize", "Roulette", ""}, {123, 122, 150, 0}},
 };
 
@@ -525,6 +526,21 @@ static void draw_face(int i)
     }
 }
 
+/* Level-up bonus icon (HP, AP, Pwr, Def, Agl, Wis): 0x00RRGGBB pixels, copied as they are. */
+static const unsigned int *const ICON_PX[6] = { ICON_HP_PX, ICON_AP_PX, ICON_PWR_PX, ICON_DEF_PX, ICON_AGL_PX, ICON_WIS_PX };
+static const int ICON_W[6] = { ICON_HP_W, ICON_AP_W, ICON_PWR_W, ICON_DEF_W, ICON_AGL_W, ICON_WIS_W };
+static const int ICON_H[6] = { ICON_HP_H, ICON_AP_H, ICON_PWR_H, ICON_DEF_H, ICON_AGL_H, ICON_WIS_H };
+
+static void draw_icon(const unsigned int *px, int w, int h, int x0, int y0)
+{
+    int x, y;
+    if (!g_dib_bits) return;
+    for (y = 0; y < h; y++) {
+        DWORD *dst = (DWORD *)g_dib_bits + (unsigned int)(y0 + y) * TEX_W + x0;
+        for (x = 0; x < w; x++) { unsigned int v = px[y * w + x]; if (v) dst[x] = v; }
+    }
+}
+
 static void paint_panel(void)
 {
     char buf[96];
@@ -590,7 +606,7 @@ static void paint_panel(void)
         txt(160, 226, "Level-up bonus", RGB(255, 255, 0));
         for (k = 0; k < 6; k++) {
             int b = BONUS_TAB[g_sel][k];
-            txt(232 + k * 46, 248, STAT_NAME[k], RGB(140, 140, 140));
+            draw_icon(ICON_PX[k], ICON_W[k], ICON_H[k], 232 + k * 46 + (12 - ICON_W[k]) / 2, 244);
             if (b > 0) {
                 wsprintfA(buf, "+%d", b);
                 txt(232 + k * 46, 270, buf, RGB(120, 230, 120));
