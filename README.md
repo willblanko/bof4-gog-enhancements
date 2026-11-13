@@ -59,7 +59,7 @@ Full table: [roadmap](docs/roadmap.md).
 - `src/d3d9/`: the Direct3D 9 proxy (`d3d9_proxy.c` and headers). Build with `build.bat`.
 - `src/ddraw/`: the pass-through DirectDraw wrapper. Build with `build.bat`.
 
-The master portraits (`src/d3d9/master_faces_data.h`) are game art. This repository is private for that reason. See [masters panel](docs/features/masters-panel.md).
+The master portraits (`src/d3d9/master_faces_data.h`) are game art. See [masters panel](docs/features/masters-panel.md).
 
 ## Documentation
 
