@@ -52,10 +52,30 @@ read from `src/d3d9/master_faces_data.h` (40×48 pixels each, shown here at 4×)
 <tr>
 <td align="center"><img src="../images/masters/bunyan.png" width="120"><br>Bunyan</td>
 <td align="center"><img src="../images/masters/lyta.png" width="120"><br>Lyta</td>
-<td align="center"><img src="../images/masters/khan.png" width="120"><br>Khan</td>
+<td align="center"><img src="../images/masters/kahn.png" width="120"><br>Kahn</td>
 <td align="center"><img src="../images/masters/marlok.png" width="120"><br>Marlok</td>
 </tr>
 </table>
 
 If you add portraits, export them in the same size and name them in lower case,
 so the gallery stays correct.
+## Milestones and rewards (reference)
+
+The milestone numbers below are facts from the bof4-notes reference, which
+describes the US release (see [external sources](../reference/external-sources.md)).
+They match the code, with one item to check:
+
+| Master | Counter | Milestones |
+|---|---|---|
+| Rwolf | combo hits | 5, 10, 15, 20 |
+| Momo | hours played | 25, 30, 40, 50 |
+| Kryrik | combo hits | 30, 40, 50, 70 |
+| Abbess | species | 70, 85, 100 |
+| Njomo | faeries | 8, 12, 16, 20 |
+| Gyosil | fishing points | 4000, 6000, 9500 |
+| Stoll | item types | 80, 120 |
+| Una | combo damage | 1500, 3000, 10000 |
+| Bunyan | move damage | 3000, 5000, 8000, 12000 |
+| Lyta | Ryu's level | 20, 25, 30 (the code also has 35: **to verify**) |
+| Kahn | battles | 300, 400, 500, 600 |
+| Marlok | ball rank | 6, 8, 10 |

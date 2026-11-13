@@ -148,7 +148,7 @@ static const MASTER_DEF MASTER_TAB[MASTER_N] = {
     {"Una", C_COMBO_DMG, 3, {1500, 3000, 10000, 0}, {"Pilfer", "Super Combo", "Blitz", ""}, {121, 88, 90, 0}},
     {"Bunyan", C_HIT_DMG, 4, {3000, 5000, 8000, 12000}, {"Backhand", "Counter", "Shadowwalk", "Final Hope"}, {137, 107, 86, 111}},
     {"Lyta", C_RYU, 4, {20, 25, 30, 35}, {"Supplication", "Holy Strike", "Resist", "Benediction"}, {108, 136, 106, 119}},
-    {"Khan", C_ENCOUNTERS, 4, {300, 400, 500, 600}, {"Focus", "Shout", "Tiger Fist", "Flex"}, {104, 112, 157, 158}},
+    {"Kahn", C_ENCOUNTERS, 4, {300, 400, 500, 600}, {"Focus", "Shout", "Tiger Fist", "Flex"}, {104, 112, 157, 158}},
     {"Marlok", C_BALL, 3, {6, 8, 10, 0}, {"Charm", "Monopolize", "Roulette", ""}, {123, 122, 150, 0}},
 };
 

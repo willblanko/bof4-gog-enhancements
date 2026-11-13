@@ -171,3 +171,15 @@ Document each step here when you do it.
 5. Copy it to the game folder and test: intro movie, masters panel on every
    page, the journal with the longest objective, status lines (F6, F8).
 6. Open a pull request with screenshots of each place you tested.
+
+## Text box sizes (reference)
+
+For translators, the info boxes have fixed heights, from the bof4-notes
+reference (US release, see [external sources](../reference/external-sources.md)):
+
+- A single-line box is 20 pixels high.
+- A double-line box is 34 pixels high.
+- The box height and an "Info" label flag share one byte in the box's data.
+  The first digit sets the height, the second digit shows or hides the "Info" label.
+
+A translated line must fit its box. Test each menu you change.

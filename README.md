@@ -59,6 +59,8 @@ Full table: [roadmap](docs/roadmap.md).
 - [Architecture](docs/architecture.md): proxies, hooks, call-site patching, logs.
 - [Building](docs/building.md): toolchain, build, deploy, test.
 - [Controls](docs/controls.md): every key and button added by this project.
+- [External sources and credits](docs/reference/external-sources.md): every outside source, its license, and what we used.
+- [PT-BR translation](docs/translation/ptbr.md): who made it, its state, and how to help.
 - [Localization](docs/localization.md): where the text is, how to translate it, and the PT-BR reference.
 - [Roadmap](docs/roadmap.md): recomp parity table and next steps.
 - [Features](docs/features/README.md): one page per feature.
@@ -71,6 +73,7 @@ Full table: [roadmap](docs/roadmap.md).
   (`docs/port-changes.md`) is the reference for every feature here, and its
   source and documentation were used to understand the game's behaviour. Thank
   you to its authors.
+- **bof4-notes** by Red Herring / glitch-in-the-herring (CC BY-SA 4.0): hacking notes for the US release. We used facts only, in our own words. See [external sources](docs/reference/external-sources.md).
 - **Breath of Fire IV** is by Capcom. This project is an unofficial community
   effort and is not affiliated with Capcom or the recomp project.
 
