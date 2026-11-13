@@ -54,7 +54,15 @@ Full table: [roadmap](docs/roadmap.md).
 | Quick save / quick load | Research ([quick save](docs/features/quick-save.md)) |
 | Instant doors, fades, spring-arm camera, autosave, sky backdrop, unified options | Not started |
 
-## Source\n\n- `src/d3d9/`: the Direct3D 9 proxy (`d3d9_proxy.c` and headers). Build with `build.bat`.\n- `src/ddraw/`: the pass-through DirectDraw wrapper. Build with `build.bat`.\n\nThe portrait data for the masters panel is not included (see [masters panel](docs/features/masters-panel.md)).\n\n## Documentation
+## Source
+
+- `src/d3d9/`: the Direct3D 9 proxy (`d3d9_proxy.c` and headers). Build with `build.bat`.
+- `src/ddraw/`: the pass-through DirectDraw wrapper. Build with `build.bat`.
+
+The master portraits (`src/d3d9/master_faces_data.h`) are game art. This repository is private for that reason. See [masters panel](docs/features/masters-panel.md).
+
+## Documentation
+
 
 - [Architecture](docs/architecture.md): proxies, hooks, call-site patching, logs.
 - [Building](docs/building.md): toolchain, build, deploy, test.
@@ -91,6 +99,7 @@ Full table: [roadmap](docs/roadmap.md).
 - **Git and GitHub CLI (`gh`)**: version control and publishing.
 - **The recomp's source** (Odin, `port/src/qol/`): reference for the walk,
   camera, save and journal features.
+
 ## License
 
 This project is released under the [MIT License](LICENSE). It does not include any Capcom or recomp code or game assets.
