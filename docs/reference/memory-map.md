@@ -144,3 +144,7 @@ the Setting screen's update function (candidate; to confirm).
 | `0x086` | Vibration | 1 on, then 0 off |
 
 The save file copies these at `0x5A8`, `0x5A9` (sound, inferred) and `0x5AE`.
+
+Confirmed live (13/11 22:34): after vibration was set to off in the Setting screen,
+the autosave at 22:34:33 wrote `0x5AE = 00`. So the option byte changes at once in
+RAM (`0xB55C2E`), and the save copies it. The trace only logs while the screen is open.

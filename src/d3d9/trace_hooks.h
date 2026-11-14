@@ -33,12 +33,22 @@ static void tr_log_line(int id, unsigned int ret)
     static const unsigned int sites[5] = { 0x677480u, 0x523D20u, 0x527FA0u, 0x527A50u, 0x501E10u };
     const unsigned char *txt = (const unsigned char *)(UINT_PTR)0xB55C28u;
     const unsigned char *vib = (const unsigned char *)(UINT_PTR)0xB55C2Eu;
-    char s[200];
+    const unsigned char *mem = (const unsigned char *)(UINT_PTR)0xB55C20u;
+    char s[260];
+    char hex[16 * 3 + 1];
+    int i;
     if (!g_tr_log || g_tr_count[id] >= TR_MAX) return;
     g_tr_count[id]++;
     (void)sites;
-    wsprintfA(s, "trace %s from %08X: text=%u vib=%u (#%d)",
-              names[id], ret, (unsigned int)txt[0], (unsigned int)vib[0], g_tr_count[id]);
+    for (i = 0; i < 16; i++) {
+        static const char digits[] = "0123456789ABCDEF";
+        hex[i * 3]     = digits[mem[i] >> 4];
+        hex[i * 3 + 1] = digits[mem[i] & 15];
+        hex[i * 3 + 2] = ' ';
+    }
+    hex[16 * 3] = 0;
+    wsprintfA(s, "trace %s from %08X: text=%u vib=%u (#%d) mem B55C20:%s",
+              names[id], ret, (unsigned int)txt[0], (unsigned int)vib[0], g_tr_count[id], hex);
     g_tr_log(s);
 }
 
