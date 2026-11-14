@@ -148,3 +148,13 @@ The save file copies these at `0x5A8`, `0x5A9` (sound, inferred) and `0x5AE`.
 Confirmed live (13/11 22:34): after vibration was set to off in the Setting screen,
 the autosave at 22:34:33 wrote `0x5AE = 00`. So the option byte changes at once in
 RAM (`0xB55C2E`), and the save copies it. The trace only logs while the screen is open.
+
+## Setting screen: progress (13/11, item 3)
+
+- `sub_527A50` builds one menu-row task record in `byte_B4EF00` (stride `0x50`) and
+  copies the text speed (`0xB55C28`) into the record at `+0x4E`. Only this routine
+  writes that field, so it is a snapshot for display, not the apply path.
+- `sub_670C30` is not the options writer: it works on a different block (`0xB533A8`..).
+- Writes to `0xB55C28`..`0xB55C34` as direct globals are only in the loader
+  (`sub_60C310`). The in-screen change must go through a pointer that is still not
+  identified. Live RAM changes are confirmed (autosave of 22:34:33).
