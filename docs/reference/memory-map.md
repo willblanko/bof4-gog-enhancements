@@ -112,3 +112,14 @@ which gives the same offset as the recomp's `OPTION_TEXT_SPEED` (0x8011AD74).
 
 The writes to `0xB55C28` and `0xB55C2E` are both in `sub_60C310`, which is
 the Setting screen's update function (candidate; to confirm).
+
+## Options file (bof4.cfg)
+
+- `bof4.cfg` (256 bytes, game folder) holds the PC options and the controls.
+- `sub_60C310` (`0x60C310`) loads it at start (`fopen "rb"`, then `malloc`).
+- `sub_60C470` (`0x60C470`) writes it (`fopen "wb"`). It is called from the
+  quit path in `sub_60B8E0` (`0x60BD8B`), so the file is written when the game closes.
+- The same option pattern as the save appears in the file (`02 00 7F 7F 00 01 01`):
+  the options are kept in the cfg and copied into each save.
+- Only the loader writes the option bytes directly; the Setting screen must change
+  them through a pointer. Finding that pointer is the next step.
