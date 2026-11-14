@@ -76,6 +76,6 @@ They match the code, with one item to check:
 | Stoll | item types | 80, 120 |
 | Una | combo damage | 1500, 3000, 10000 |
 | Bunyan | move damage | 3000, 5000, 8000, 12000 |
-| Lyta | Ryu level | 20, 25, 30, 35 (the 35 tier is confirmed in game) |
+| Lyta | Ryu level | 20, 25, 30, 35 |
 | Khan | battles | 300, 400, 500, 600 |
 | Marlok | ball rank | 6, 8, 10 |
