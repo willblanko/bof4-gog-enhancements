@@ -52,7 +52,7 @@ build.
 | Intro movie subtitles | Yes | L key. See [subtitles](features/subtitles.md). |
 | Gear descriptions with hidden effects | No | |
 | Save anywhere | Yes | See [save anywhere](features/save-anywhere.md). |
-| Autosave on entering each field map (slot 2) | Partial | Keeps 3 backups; F4. See [autosave](features/autosave-slot2.md). |
+| Autosave on entering each field map (slot 2) | Partial | Keeps 3 backups; F4. Tested: saves on each room change. See [autosave](features/autosave-slot2.md). |
 | Unified options menu (Setting > Extras) | No | |
 | Masters panel | Yes | F12. See [masters panel](features/masters-panel.md). |
 | Button prompts follow the device | Not verified | |

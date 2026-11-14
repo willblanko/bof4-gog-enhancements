@@ -1,6 +1,6 @@
 # Autosave to slot 2
 
-**Status:** Partial. Written and built; not tested in game yet.
+**Status:** Partial. Tested in game: it writes on each room change, and the backups rotate. Accepted as it is.
 
 ## What it does
 
@@ -44,6 +44,13 @@ Nothing is patched otherwise.
 |---|---|---|
 | `0x521562` | `sub_676CF0` in the field map-load case | `as_stub` |
 
+## Tested
+
+- Entered and left several rooms in Breath of Fire IV - Traduzido. The log showed six
+  `autosave slot 2: written` lines, and `02.DAT` and the three backups are 6272 bytes.
+- Every room change saves, including leaving a room, not only entering one. Kept as it is.
+- F4 toggles the feature, and the log records both states.
+
 ## Open issues
 
 - Loading a save also goes through a map change. Check whether a load from slot
@@ -51,5 +58,4 @@ Nothing is patched otherwise.
   confirm).
 - The save menu's record table is updated by the writer, as it is for a normal
   save. Check that the menu still shows the right save info after an autosave.
-- Still to test: a town and a field map in turn, a door in and out, a load from
-  slot 2, the backups after several maps, and F4 turning it off.
+- Still to test: a load from slot 2 (see above), and the save menu after an autosave.
