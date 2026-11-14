@@ -1830,6 +1830,7 @@ static double fl_atan2(double y, double x)
 #include "fade_speed.h"            /* normal fades limited, door fades quickened (F5 toggles) */
 #include "autosave_slot2.h"        /* autosave to slot 2 on each field map, 3 backups (F4 toggles) */
 #include "trace_hooks.h"           /* log only: candidate Setting screen routines (no behaviour change) */
+#include "arm_probe.h"             /* log only: camera spring-arm probe (F3 toggles, off by default) */
 
 static void follow_frame(int manual_turn)
 {
@@ -1889,6 +1890,12 @@ static long __stdcall my_sc_present(void *sc, const void *a, const void *b, HWND
                 stick_frame();
                 walk_frame();
                 zoom_frame();
+                arm_probe_frame();     /* log only */
+                if (GetAsyncKeyState(VK_F3) & 1) {
+                    g_ap_on = !g_ap_on;
+                    logln(g_ap_on ? "arm probe ON" : "arm probe OFF");
+                    status_show(g_ap_on ? "Camera probe: ON" : "Camera probe: OFF");
+                }
                 cap_frame();
                 if (GetAsyncKeyState(VK_F7) & 1) {
                     g_fl_on = !g_fl_on;

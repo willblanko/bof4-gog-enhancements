@@ -27,3 +27,10 @@ The camera code lives in `d3d9_proxy.c`: `stick_frame` (right stick),
 The game's own camera data is read and written at fixed addresses. Document
 them in the [memory map](../reference/memory-map.md) before changing the
 camera.
+
+## Spring-arm probe (item 4, log only)
+
+Not a feature yet. F3 turns on a probe (off by default) that writes one line
+every 30 field frames: the leader's cell, the cell attribute, the camera offset
+triple (`0xBAD7CC/D0/D4`) and the yaw. Used to confirm the scale of the triple
+and the wall attributes before the arm is applied. Code: `src/d3d9/arm_probe.h`.
