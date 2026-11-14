@@ -123,3 +123,14 @@ the Setting screen's update function (candidate; to confirm).
   the options are kept in the cfg and copied into each save.
 - Only the loader writes the option bytes directly; the Setting screen must change
   them through a pointer. Finding that pointer is the next step.
+
+## Setting screen (candidates, static)
+
+- `sub_677480` (`0x677480`, 1733 bytes) is a UI task run by the dispatcher
+  `sub_68E720`. It calls `sub_527B40`, which calls `sub_527FA0` (1330 bytes,
+  jump table) and `sub_527A50`. These read `0xB55C28` on the Setting screen.
+  Candidate for the Setting screen; to confirm at run time.
+- `sub_523D20` (`0x523D20`) reads and writes the three option dwords. It is
+  called from the quit path (`0x60BB44` in `sub_60B8E0`) and from other places.
+  Candidate for save/restore of the options.
+- `sub_501E10` (`0x501E10`) writes the option dwords and is called from `0x50201A`.
