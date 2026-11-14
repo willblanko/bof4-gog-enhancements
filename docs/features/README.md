@@ -15,6 +15,7 @@ works, where it lives in the code, and what is still open.
 | Intro subtitles | Done | [subtitles.md](subtitles.md) |
 | Vignette | Done | [vignette.md](vignette.md) |
 | Fades (smoother, faster doors) | Partial | [fades.md](fades.md) |
+| Autosave to slot 2 | Partial | [autosave-slot2.md](autosave-slot2.md) |
 | Fullscreen | Done | [fullscreen.md](fullscreen.md) |
 | Wall transparency | Research | [wall-transparency.md](wall-transparency.md) |
 | Quick save / quick load | Research | [quick-save.md](quick-save.md) |

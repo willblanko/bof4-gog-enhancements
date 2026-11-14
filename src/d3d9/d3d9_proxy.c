@@ -1828,6 +1828,7 @@ static double fl_atan2(double y, double x)
 
 #include "walk_stick.h"            /* left stick walks at any angle (F6 toggles) */
 #include "fade_speed.h"            /* normal fades limited, door fades quickened (F5 toggles) */
+#include "autosave_slot2.h"        /* autosave to slot 2 on each field map, 3 backups (F4 toggles) */
 
 static void follow_frame(int manual_turn)
 {
@@ -1896,6 +1897,11 @@ static long __stdcall my_sc_present(void *sc, const void *a, const void *b, HWND
                     g_wk_on = !g_wk_on;
                     logln(g_wk_on ? "walk stick ON" : "walk stick OFF");
                     status_show(g_wk_on ? "Analog stick walking: ON" : "Analog stick walking: OFF");
+                }
+                if (GetAsyncKeyState(VK_F4) & 1) {
+                    g_as_enabled = !g_as_enabled;
+                    logln(g_as_enabled ? "autosave slot 2 ON" : "autosave slot 2 OFF");
+                    status_show(g_as_enabled ? "Autosave slot 2: ON" : "Autosave slot 2: OFF");
                 }
                 if (GetAsyncKeyState(VK_F5) & 1) {
                     g_fs_enabled = !g_fs_enabled;
@@ -2056,6 +2062,7 @@ static long __stdcall my_createdev(void *d3d, UINT adapter, int type, HWND hwnd,
     if (hr >= 0) enc_install(logln);  /* no encounters: checks the three call sites first */
     if (hr >= 0) walk_install(logln); /* left stick walk: checks the three call sites first */
     if (hr >= 0) fs_install(logln);   /* fade speed: checks the call site first */
+    if (hr >= 0) as_install(logln);   /* autosave slot 2: checks the call site first */
     if (hr >= 0 && ret && *ret && pp) {
         g_dev = *ret;
         g_w = ((unsigned int *)pp)[0];

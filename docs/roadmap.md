@@ -52,7 +52,7 @@ build.
 | Intro movie subtitles | Yes | L key. See [subtitles](features/subtitles.md). |
 | Gear descriptions with hidden effects | No | |
 | Save anywhere | Yes | See [save anywhere](features/save-anywhere.md). |
-| Autosave on entering each field map (slot 2) | No | |
+| Autosave on entering each field map (slot 2) | Partial | Keeps 3 backups; F4. See [autosave](features/autosave-slot2.md). |
 | Unified options menu (Setting > Extras) | No | |
 | Masters panel | Yes | F12. See [masters panel](features/masters-panel.md). |
 | Button prompts follow the device | Not verified | |
@@ -84,4 +84,4 @@ Rebalanced mode, KO max-HP loss.
 4. Decide whether [quick save](features/quick-save.md) is worth the risk.
 5. Port the spring-arm camera and smooth camera ([camera](features/camera.md)).
 6. Finish instant doors (keep the world between visits) and test the fades in game ([fades](features/fades.md)).
-7. Port autosave to slot 2 on each field map.
+7. Test autosave to slot 2 ([autosave](features/autosave-slot2.md)).

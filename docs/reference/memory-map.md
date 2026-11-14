@@ -45,6 +45,8 @@ ours, not the game's.
 | `0x66EDC0` | cell attribute | Attribute byte of a cell |
 | `0x6645C0` | ground height | Height of the ground at a position |
 | `0x66F070`, `0x66F110` | interpolation | Prepare and advance a step |
+| `0x521562` | field map load call | Redirected for autosave (see [autosave](../features/autosave-slot2.md)) |
+| `0x52A5E0` | save write | Builds and writes the slot; record byte `+0x16` = slot - 1 |
 | `0x520290` | fade start | Sets the fade type and starts the fade task |
 | `0x5202D0` | fade loop | Runs the fade step each frame until done |
 | `0x520360` | fade step | One frame of a fade; returns 1 when done |
