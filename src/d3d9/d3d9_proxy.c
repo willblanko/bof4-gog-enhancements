@@ -1827,6 +1827,7 @@ static double fl_atan2(double y, double x)
 }
 
 #include "walk_stick.h"            /* left stick walks at any angle (F6 toggles) */
+#include "fade_speed.h"            /* normal fades limited, door fades quickened (F5 toggles) */
 
 static void follow_frame(int manual_turn)
 {
@@ -1895,6 +1896,11 @@ static long __stdcall my_sc_present(void *sc, const void *a, const void *b, HWND
                     g_wk_on = !g_wk_on;
                     logln(g_wk_on ? "walk stick ON" : "walk stick OFF");
                     status_show(g_wk_on ? "Analog stick walking: ON" : "Analog stick walking: OFF");
+                }
+                if (GetAsyncKeyState(VK_F5) & 1) {
+                    g_fs_enabled = !g_fs_enabled;
+                    logln(g_fs_enabled ? "fade speed ON" : "fade speed OFF");
+                    status_show(g_fs_enabled ? "Smooth fades: ON" : "Smooth fades: OFF");
                 }
                 if (GetAsyncKeyState(VK_F8) & 1) {
                     g_enc_off = !g_enc_off;
@@ -2049,6 +2055,7 @@ static long __stdcall my_createdev(void *d3d, UINT adapter, int type, HWND hwnd,
     if (hr >= 0) sa_install(logln);   /* save anywhere: checks the EXE bytes before patching */
     if (hr >= 0) enc_install(logln);  /* no encounters: checks the three call sites first */
     if (hr >= 0) walk_install(logln); /* left stick walk: checks the three call sites first */
+    if (hr >= 0) fs_install(logln);   /* fade speed: checks the call site first */
     if (hr >= 0 && ret && *ret && pp) {
         g_dev = *ret;
         g_w = ((unsigned int *)pp)[0];

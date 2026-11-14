@@ -22,7 +22,7 @@ build.
 | Sky backdrop | No | |
 | Depth buffer under the third-person camera | No | Linked to [wall transparency](features/wall-transparency.md). |
 | See-through leader (only the leader's silhouette fades) | No | Linked to [wall transparency](features/wall-transparency.md). |
-| Longer, eased screen fades | No | |
+| Longer, eased screen fades | Partial | Normal fades capped; F5. See [fades](features/fades.md). |
 | Screen shake off | Not verified | |
 
 ## Field
@@ -37,7 +37,7 @@ build.
 | Continuous movement (no grid) | No | Option B in [walk stick](features/walk-stick.md). |
 | Native field engine and map editor | No | Port-only. |
 | Seamless sections (rooms and corridors join) | No | |
-| Instant doors | No | |
+| Instant doors | Partial | Doors fade faster; the disc load still runs. See [fades](features/fades.md). |
 | Random encounter rate 0 to 16x | Partial | On or off only. See [random encounters](features/random-encounters.md). |
 | Minimap | Yes | M key. See [minimap](features/minimap.md). |
 | Quest tracker on the Menu button | Partial | Journal on J, first chapters only, provisional text. See [journal](features/journal.md). |
@@ -83,5 +83,5 @@ Rebalanced mode, KO max-HP loss.
 3. Investigate the display device for [wall transparency](features/wall-transparency.md).
 4. Decide whether [quick save](features/quick-save.md) is worth the risk.
 5. Port the spring-arm camera and smooth camera ([camera](features/camera.md)).
-6. Port instant doors and longer fades.
+6. Finish instant doors (keep the world between visits) and test the fades in game ([fades](features/fades.md)).
 7. Port autosave to slot 2 on each field map.

@@ -24,6 +24,9 @@ ours, not the game's.
 | `0xBAB408` | u16 | Game mode / field loop state (field = 2) |
 | `0xBB65A0` | counter | Random encounter step budget |
 | `0xBAB54E`, `0xBAB54F` | flags | Encounter flags |
+| `0xBAB428` | u8 | Transition submode; 4 = door transition (set at `0x676CE6`) |
+| `0xBAB480` | u16 | Fade active (non-zero while a fade runs) |
+| `0xBAB488` | u16 | Fade type index, used by the jump table at `0x520DAA` |
 
 ## Functions
 
@@ -42,6 +45,10 @@ ours, not the game's.
 | `0x66EDC0` | cell attribute | Attribute byte of a cell |
 | `0x6645C0` | ground height | Height of the ground at a position |
 | `0x66F070`, `0x66F110` | interpolation | Prepare and advance a step |
+| `0x520290` | fade start | Sets the fade type and starts the fade task |
+| `0x5202D0` | fade loop | Runs the fade step each frame until done |
+| `0x520360` | fade step | One frame of a fade; returns 1 when done |
+| `0x5203C0` | fade draw | Adds the full-screen darkening primitive |
 | `0x65F070` | packet build | Builds field draw packets |
 | `0x529D60` | save/load dispatch | Choose read or write |
 | `0x52A5E0` | save write | Writes a save file |
