@@ -1829,6 +1829,7 @@ static double fl_atan2(double y, double x)
 #include "walk_stick.h"            /* left stick walks at any angle (F6 toggles) */
 #include "fade_speed.h"            /* normal fades limited, door fades quickened (F5 toggles) */
 #include "autosave_slot2.h"        /* autosave to slot 2 on each field map, 3 backups (F4 toggles) */
+#include "trace_hooks.h"           /* log only: candidate Setting screen routines (no behaviour change) */
 
 static void follow_frame(int manual_turn)
 {
@@ -2063,6 +2064,7 @@ static long __stdcall my_createdev(void *d3d, UINT adapter, int type, HWND hwnd,
     if (hr >= 0) walk_install(logln); /* left stick walk: checks the three call sites first */
     if (hr >= 0) fs_install(logln);   /* fade speed: checks the call site first */
     if (hr >= 0) as_install(logln);   /* autosave slot 2: checks the call site first */
+    if (hr >= 0) tr_install(logln);   /* trace: log only, checks the call sites first */
     if (hr >= 0 && ret && *ret && pp) {
         g_dev = *ret;
         g_w = ((unsigned int *)pp)[0];
