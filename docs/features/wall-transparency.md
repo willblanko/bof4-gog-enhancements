@@ -62,3 +62,9 @@ classification are not.
 F2 turns on a test that sets the camera near plane (`0xBAD7C0`) to 0x100 every field
 frame. The test is in `src/d3d9/near_test.h`. If the wall stays visible when the camera
 turns with the test on, the wall's disappearance comes from the near-plane cut.
+
+**Result of the near-plane test (14/11):** with the near plane at 0x100 (log shows
+256), the wall that disappears when the camera turns did not change on screen. So
+the near-plane cut is not the cause of this disappearance. The test is kept as a
+negative result. The other explanations in the report (back-face culling, a
+per-object cull) are still open.
