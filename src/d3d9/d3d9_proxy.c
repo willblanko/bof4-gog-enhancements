@@ -1831,6 +1831,7 @@ static double fl_atan2(double y, double x)
 #include "autosave_slot2.h"        /* autosave to slot 2 on each field map, 3 backups (F4 toggles) */
 #include "trace_hooks.h"           /* log only: candidate Setting screen routines (no behaviour change) */
 #include "arm_probe.h"             /* log only: camera spring-arm probe (F3 toggles, off by default) */
+#include "near_test.h"             /* experiment: camera near plane lowered (F2 toggles) */
 
 static void follow_frame(int manual_turn)
 {
@@ -1891,6 +1892,12 @@ static long __stdcall my_sc_present(void *sc, const void *a, const void *b, HWND
                 walk_frame();
                 zoom_frame();
                 arm_probe_frame();     /* log only */
+                if (GetAsyncKeyState(VK_F2) & 1) {
+                    g_nt_on = !g_nt_on;
+                    logln(g_nt_on ? "near test ON" : "near test OFF");
+                    status_show(g_nt_on ? "Near plane test: ON" : "Near plane test: OFF");
+                }
+                near_test_frame();
                 if (GetAsyncKeyState(VK_F3) & 1) {
                     g_ap_on = !g_ap_on;
                     logln(g_ap_on ? "arm probe ON" : "arm probe OFF");

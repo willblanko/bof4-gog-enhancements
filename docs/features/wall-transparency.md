@@ -56,3 +56,9 @@ silhouette.
 
 Medium. The packet and draw path is well supported. The device and the object
 classification are not.
+
+## Near-plane test (experiment, F2)
+
+F2 turns on a test that sets the camera near plane (`0xBAD7C0`) to 0x100 every field
+frame. The test is in `src/d3d9/near_test.h`. If the wall stays visible when the camera
+turns with the test on, the wall's disappearance comes from the near-plane cut.
