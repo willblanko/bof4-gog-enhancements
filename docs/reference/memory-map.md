@@ -158,3 +158,29 @@ RAM (`0xB55C2E`), and the save copies it. The trace only logs while the screen i
 - Writes to `0xB55C28`..`0xB55C34` as direct globals are only in the loader
   (`sub_60C310`). The in-screen change must go through a pointer that is still not
   identified. Live RAM changes are confirmed (autosave of 22:34:33).
+
+## Setting screen: the option writer (confirmed, item 3)
+
+Found with the Antigravity CLI report (`report_item3.md`) and checked in IDA.
+
+- `sub_501440` (`0x501440`, 820 bytes) is the handler for the option rows
+  (`funcs_50201A[1]`). It writes an option when the player presses left or right.
+- It reaches each option through a pointer table at `0x9566A0` (8 dwords):
+
+| Row | Pointer | Option | Range (`0x9497A8`) |
+|---|---|---|---|
+| 0 | `0xB55C2E` | Vibration (0 off, 1 on) | 0..1 |
+| 1 | `0xB55C2D` | Unknown (aux 1) | 0..1 |
+| 2 | `0xB55C30` | Unknown (aux 2) | 0..1 |
+| 3 | `0xB55C2F` | Unknown (aux 3) | 0..2 |
+| 4 | `0xB55C28` | Text speed (0 slow, 1 normal, 2 fast) | 0..2 |
+| 5 | `0xB55C29` | Sound (0 stereo, 1 mono) | 0..1 |
+| 6 | `0xB55C2A` | BGM volume (steps of 4, max 0x7F) | 0..0x7F |
+| 7 | `0xB55C2B` | SE volume (steps of 4, max 0x7F) | 0..0x7F |
+
+- The row index is the byte at `0xB5082C`. Right is `inc byte ptr [eax]` at `0x501566`,
+  with wrap to 0; left is at `0x501648`.
+- `sub_501E10` writes the default values for all options (the "Default" entry).
+- `sub_677480`, `sub_527FA0` and `sub_523D20` do not write options (checked by the report).
+  The trace hooks on them only read.
+- Rows 1 to 3 are not named yet; confirm in game (see the report's section 7).
