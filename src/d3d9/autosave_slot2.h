@@ -39,6 +39,7 @@
 static volatile int g_as_enabled = 1;
 static int g_as_installed = 0;
 static unsigned char g_as_rec[0x200];   /* fake record for the writer, zeroed */
+static void (*g_as_log)(const char *) = 0;   /* set by as_install */
 
 /* Copies SAV\02.DAT to the backup chain, dropping the oldest. Missing files are
  * skipped, so the first autosave simply makes no backup. */
@@ -61,11 +62,18 @@ static void as_autosave(void)
 {
     typedef void (__cdecl *SaveFn)(void *);
     SaveFn save = (SaveFn)(UINT_PTR)AS_SAVE_WRITE;
+    WIN32_FILE_ATTRIBUTE_DATA fa;
+    char s[160];
+    unsigned int size = 0;
 
     as_backup_slot2();
     g_as_rec[0x12] = 0;   /* record index */
     g_as_rec[0x16] = 1;   /* slot index: file 02 */
     save(g_as_rec);
+    if (GetFileAttributesExA("SAV\\02.DAT", GetFileExInfoStandard, &fa))
+        size = fa.nFileSizeLow;
+    wsprintfA(s, "autosave slot 2: written, SAV\\02.DAT %u bytes (expected 6272)", size);
+    if (g_as_log) g_as_log(s);
 }
 
 /* Naked stub, entered by the patched call (no arguments). It runs the map load,
@@ -116,6 +124,7 @@ static void as_install(void (*log)(const char *))
 
     if (g_as_installed) return;
     g_as_installed = 1;
+    g_as_log = log;
     if ((unsigned int)(UINT_PTR)GetModuleHandleA(NULL) != AS_MODULE_BASE) {
         wsprintfA(s, "autosave slot 2: module base is not %08X; not installed", AS_MODULE_BASE);
         if (log) log(s);

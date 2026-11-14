@@ -98,3 +98,17 @@ ours, not the game's.
   each one against the GOG executable before using it (for example the
   journal's progress word).
 - When a function's name here differs from the game's own, the name is ours.
+
+## Options (Setting screen)
+
+Confirmed in the GOG save file (`SAV\NN.DAT`) by diffing two saves made with
+one option changed. The file offset is `0x180 + (PS1 address - 0x8011A94C)`,
+which gives the same offset as the recomp's `OPTION_TEXT_SPEED` (0x8011AD74).
+
+| File offset | RAM (GOG exe) | Option | Values seen |
+|---|---|---|---|
+| `0x5A8` | `0xB55C28` | Text speed | 1 Normal (was 2 Fast) |
+| `0x5AE` | `0xB55C2E` | Vibration | 0 off (was 1 on) |
+
+The writes to `0xB55C28` and `0xB55C2E` are both in `sub_60C310`, which is
+the Setting screen's update function (candidate; to confirm).
