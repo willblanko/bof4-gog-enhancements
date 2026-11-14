@@ -134,3 +134,13 @@ the Setting screen's update function (candidate; to confirm).
   called from the quit path (`0x60BB44` in `sub_60B8E0`) and from other places.
   Candidate for save/restore of the options.
 - `sub_501E10` (`0x501E10`) writes the option dwords and is called from `0x50201A`.
+
+## Options in bof4.cfg (confirmed by diff, 13/11 22:29)
+
+| cfg offset | Option | Values seen |
+|---|---|---|
+| `0x080` | Text speed | 2 Fast, then 1 Normal |
+| `0x081` | Sound | 0 stereo, then 1 mono (inferred from the change) |
+| `0x086` | Vibration | 1 on, then 0 off |
+
+The save file copies these at `0x5A8`, `0x5A9` (sound, inferred) and `0x5AE`.

@@ -117,27 +117,40 @@ __declspec(naked) static void tr_stub_501E10(void)
 }
 
 /* A patched site: where it is, the routine it calls, and its trace stub. */
-typedef struct { unsigned int site; unsigned int target; void (*stub)(void); int id; } TrSite;
+/* kind 0: a call E8 rel32 at site; kind 1: C7 44 24 04 imm32 at site (a function
+ * pointer stored in a task record); kind 2: push imm32 (68) at site (a function
+ * pointer pushed as an argument). The imm32 is the routine address in kinds 1 and 2. */
+typedef struct { unsigned int site; unsigned int target; void (*stub)(void); int id; int kind; } TrSite;
 
 static TrSite g_tr_sites[] = {
-    { 0x68E733u, 0x677480u, tr_stub_677480, 0 },
-    { 0x4C79E3u, 0x523D20u, tr_stub_523D20, 1 },
-    { 0x60BB44u, 0x523D20u, tr_stub_523D20, 1 },
-    { 0x654367u, 0x523D20u, tr_stub_523D20, 1 },
-    { 0x6551CCu, 0x523D20u, tr_stub_523D20, 1 },
-    { 0x65539Du, 0x523D20u, tr_stub_523D20, 1 },
-    { 0x527B63u, 0x527FA0u, tr_stub_527FA0, 2 },
-    { 0x52798Cu, 0x527A50u, tr_stub_527A50, 3 },
-    { 0x5283EEu, 0x527A50u, tr_stub_527A50, 3 },
-    { 0x50201Au, 0x501E10u, tr_stub_501E10, 4 },
+    { 0x68E733u, 0x677480u, tr_stub_677480, 0, 1 },
+    { 0x4C79E3u, 0x523D20u, tr_stub_523D20, 1, 2 },
+    { 0x60BB44u, 0x523D20u, tr_stub_523D20, 1, 2 },
+    { 0x654367u, 0x523D20u, tr_stub_523D20, 1, 2 },
+    { 0x6551CCu, 0x523D20u, tr_stub_523D20, 1, 2 },
+    { 0x65539Du, 0x523D20u, tr_stub_523D20, 1, 2 },
+    { 0x527B63u, 0x527FA0u, tr_stub_527FA0, 2, 0 },
+    { 0x52798Cu, 0x527A50u, tr_stub_527A50, 3, 0 },
+    { 0x5283EEu, 0x527A50u, tr_stub_527A50, 3, 0 },
 };
 
-/* True when the site is a call (E8) to the expected routine. */
+/* True when the site holds the expected call (kind 0) or the expected pointer (kind 1). */
 static int tr_site_ok(const TrSite *t)
 {
     const unsigned char *p = (const unsigned char *)(UINT_PTR)t->site;
     unsigned int target;
-    if (IsBadReadPtr(p, 5)) return 0;
+    if (IsBadReadPtr(p, 8)) return 0;
+    if (t->kind == 2) {
+        target = (unsigned int)p[1] | ((unsigned int)p[2] << 8)
+                 | ((unsigned int)p[3] << 16) | ((unsigned int)p[4] << 24);
+        return p[0] == 0x68 && target == t->target;
+    }
+    if (t->kind == 1) {
+        target = (unsigned int)p[4] | ((unsigned int)p[5] << 8)
+                 | ((unsigned int)p[6] << 16) | ((unsigned int)p[7] << 24);
+        return p[0] == 0xC7 && p[1] == 0x44 && p[2] == 0x24 && p[3] == 0x04
+               && target == t->target;
+    }
     if (p[0] != 0xE8) return 0;
     target = t->site + 5 + (unsigned int)p[1] + ((unsigned int)p[2] << 8)
              + ((unsigned int)p[3] << 16) + ((unsigned int)p[4] << 24);
@@ -147,16 +160,29 @@ static int tr_site_ok(const TrSite *t)
 static void tr_patch_site(const TrSite *t)
 {
     unsigned char *p = (unsigned char *)(UINT_PTR)t->site;
-    unsigned int rel = (unsigned int)(UINT_PTR)t->stub - (t->site + 5);
-    unsigned char want[5];
     DWORD old;
+    unsigned int v;
     int i;
-    want[0] = 0xE8;
-    for (i = 0; i < 4; i++) want[1 + i] = (unsigned char)(rel >> (8 * i));
-    if (!VirtualProtect(p, 5, PAGE_EXECUTE_READWRITE, &old)) return;
-    for (i = 0; i < 5; i++) p[i] = want[i];
-    VirtualProtect(p, 5, old, &old);
-    FlushInstructionCache(GetCurrentProcess(), p, 5);
+    if (!VirtualProtect(p, 8, PAGE_EXECUTE_READWRITE, &old)) return;
+    if (t->kind == 2) {
+        v = (unsigned int)(UINT_PTR)t->stub;
+        for (i = 0; i < 4; i++) p[1 + i] = (unsigned char)(v >> (8 * i));
+        VirtualProtect(p, 8, old, &old);
+        FlushInstructionCache(GetCurrentProcess(), p, 8);
+        return;
+    }
+    if (t->kind == 1) {
+        v = (unsigned int)(UINT_PTR)t->stub;
+        for (i = 0; i < 4; i++) p[4 + i] = (unsigned char)(v >> (8 * i));
+        VirtualProtect(p, 8, old, &old);
+        FlushInstructionCache(GetCurrentProcess(), p, 8);
+        return;
+    }
+    v = (unsigned int)(UINT_PTR)t->stub - (t->site + 5);
+    p[0] = 0xE8;
+    for (i = 0; i < 4; i++) p[1 + i] = (unsigned char)(v >> (8 * i));
+    VirtualProtect(p, 8, old, &old);
+    FlushInstructionCache(GetCurrentProcess(), p, 8);
 }
 
 /* Install once. Checks every site first; writes nothing if one differs. */
