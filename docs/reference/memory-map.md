@@ -184,3 +184,17 @@ Found with the Antigravity CLI report (`report_item3.md`) and checked in IDA.
 - `sub_677480`, `sub_527FA0` and `sub_523D20` do not write options (checked by the report).
   The trace hooks on them only read.
 - Rows 1 to 3 are not named yet; confirm in game (see the report's section 7).
+
+## Third-person camera (item 4, spring arm)
+
+Report from the opencode Go model (`opencode_item4\report_item4.md`), checked in IDA.
+
+- The game has its own 3D camera. Its state is at `0xBAD7A0..0xBAD880`.
+- Camera distance: the offset triple `0xBAD7CC` (lateral), `0xBAD7D0` (vertical),
+  `0xBAD7D4` (distance along the view). Reset in `sub_65E5F0` writes `0x1400` to
+  `0xBAD7D4` at `0x65E67A`. Each room preset sets it too.
+- Yaw: `0xBAD7C6`. Near plane: `0xBAD7C0`.
+- The game has no line-of-sight test for the camera. Collision candidates:
+  `sub_66EDC0` (cell attribute), `sub_6645C0` (ground height), `sub_636A80` (walkable A to B).
+- `sub_6676E0` is the camera script state machine; modes 6 and 7 add the leader's
+  offset to the triple every frame.
