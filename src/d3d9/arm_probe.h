@@ -44,6 +44,20 @@ static void arm_probe_frame(void)
               (int)*(const int *)AP_TRIPLE_X, (int)*(const int *)AP_TRIPLE_Y,
               (int)*(const int *)AP_TRIPLE_Z, (unsigned int)mm_r16(MM_CAMERA_YAW));
     logln(s);
+
+    /* the eight neighbour cells, in the order N, NE, E, SE, S, SW, W, NW (x right, z down) */
+    if (ok) {
+        static const int nx[8] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+        static const int nz[8] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+        char nb[8 * 3 + 16];
+        int k;
+        for (k = 0; k < 8; k++) {
+            int a = mm_attr(attrs, w, h, cx + nx[k], cz + nz[k]);
+            wsprintfA(nb + k * 3, "%02X ", a & 0xff);
+        }
+        wsprintfA(s, "arm probe: neighbours N NE E SE S SW W NW: %s", nb);
+        logln(s);
+    }
 }
 
 #endif
