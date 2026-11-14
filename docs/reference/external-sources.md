@@ -60,3 +60,17 @@ Codex, Claude Code, Git and the GitHub CLI. The full list is in the README.
   or relicense the project under GPL v3.
 - Breath of Fire IV and its art (including the master portraits) belong to
   Capcom. The repository is private for that reason.
+## Format notes from the PC translation work (Mailson Maia Alves)
+
+File `bof4-pc-formats.md` (kept outside the repo) describes the GOG `DAT` containers,
+the PS1 `EMI` layout, the message banks, the `INIT.DAT` catalogue and the save
+file layout. Credit to its author. What this project uses from it:
+
+- Save checksum: XOR of bytes `0x0000`..`0x184E`, stored at `0x184F`. Checked on the
+  autosave, manual and backup saves; all match.
+- Save offsets for characters (`0x0180`, stride `0x98`), Zenny (`0x05B4`), GP (`0x0F98`),
+  inventory (`0x05CC`, stride `0x200`), and fishing (`0x1154`). Not used yet.
+
+Not used yet, for the translation phase: the `DAT` table of contents (16-byte
+entries), the `EMI` 2048-byte sector layout, and the `uint16` pointer tables in the
+message banks.
